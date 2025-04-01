@@ -1,4 +1,4 @@
-import { call, type Operation } from "../../../mod.ts";
+import { call, type Operation, spawn } from "../../../mod.ts";
 import { scenario } from "./scenario.ts";
 
 await scenario("effection.startup", function* (_, exit) {
@@ -9,5 +9,7 @@ await scenario("effection.startup", function* (_, exit) {
     yield* call(() => Promise.resolve());
   }
 
-  return yield* startup();
+  const task = yield* spawn(() => startup());
+
+  return yield* task;
 });
